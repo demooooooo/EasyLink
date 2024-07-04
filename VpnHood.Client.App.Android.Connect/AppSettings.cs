@@ -14,7 +14,7 @@ internal class AppSettings : Singleton<AppSettings>
     public string DefaultAccessKey { get; init; } = ClientOptions.SampleAccessKey;
     
     // Google sign-in (It is created through Firebase)
-    public string GoogleSignInClientId { get; init; } = "000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com"; //YOUR_FIREBASE_CLIENT_ID
+    public string GoogleSignInClientId { get; init; } = "608246853989-unch2pvmf7urffb6ku8gac5pqofc9utf.apps.googleusercontent.com"; //YOUR_FIREBASE_CLIENT_ID
 
     // Firebase Crashlytics
     public string? FirebaseProjectId { get; init; } //YOUR_FIREBASE_PROJECT_ID "client-xxxxx"
@@ -22,7 +22,7 @@ internal class AppSettings : Singleton<AppSettings>
     public string? FirebaseApiKey { get; init; } //YOUR_FIREBASE_API_KEY "xxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxxxxxxxx"
 
     // VpnHood Store server
-    public Uri StoreBaseUri { get; init; } = new ("https://store-api.vpnhood.com");
+    public Uri StoreBaseUri { get; init; } = new ("http://192.168.0.108:5000");
     public Guid StoreAppId { get; init; } = Guid.Parse("00000000-0000-0000-0000-000000000000"); //YOUR_VPNHOOD_STORE_APP_ID
     public bool StoreIgnoreSslVerification { get; init; } = IsDebugMode;
 

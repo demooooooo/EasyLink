@@ -2,12 +2,13 @@
 	<PropertyGroup>
 		<Description>VpnHood Android Client Connect App with Ads and memebership</Description>
 		<TargetFramework>net8.0-android34.0</TargetFramework>
-		<RootNamespace>VpnHood.Client.App.Droid.Connect</RootNamespace>
+		<RootNamespace>EasyLinkVpn.Client.App.Droid.Connect</RootNamespace>
 		<OutputType>Exe</OutputType>
-		<ApplicationId>com.vpnhood.connect.android</ApplicationId>
+		<ApplicationId>com.easylinkvpn.android</ApplicationId>
 		<ApplicationVersion>534</ApplicationVersion>
 		<ApplicationDisplayVersion>4.5.534</ApplicationDisplayVersion>
 		<SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
