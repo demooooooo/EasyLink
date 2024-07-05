@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using VpnHood.Client.App.Abstractions;
@@ -19,7 +20,6 @@ public class StoreAuthenticationService : IAppAuthenticationService
     private ApiKey? _apiKey;
     private string ApiKeyFilePath => Path.Combine(_storageFolderPath, "account", "apiKey.json");
     public bool IsSignInWithGoogleSupported => _externalAuthenticationService != null;
-
     public string? UserId => ApiKey?.UserId;
 
     public HttpClient HttpClient { get; }
@@ -143,6 +143,9 @@ public class StoreAuthenticationService : IAppAuthenticationService
                     RefreshTokenType = RefreshTokenType.None
                 })
                 .VhConfigureAwait();
+
+
+            var tauthenticationClient = new AuthenticationClient(HttpClient);
         }
         // store must update its nuget package to support UnregisteredUserException
         catch (ApiException ex)
@@ -176,13 +179,24 @@ public class StoreAuthenticationService : IAppAuthenticationService
         HttpClient.Dispose();
     }
 
+    private Task<ApiKey?> TryGetKey(IUiContext? uiContext)
+    {
+        return Task.FromResult(ApiKey);
+    }
     public class HttpClientHandlerAuth(StoreAuthenticationService accountService) : HttpClientHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var apiKey = await accountService.TryGetApiKey(VpnHoodApp.Instance.UiContext).VhConfigureAwait();
-            request.Headers.Authorization = apiKey != null ? new AuthenticationHeaderValue(apiKey.AccessToken.Scheme, apiKey.AccessToken.Value) : null;
-            return await base.SendAsync(request, cancellationToken).VhConfigureAwait();
+            var apiKey = await accountService.TryGetKey(VpnHoodApp.Instance.UiContext).VhConfigureAwait();
+            var _publicKey = apiKey.AccessToken;
+            var _secretKey = apiKey.RefreshToken;
+
+            var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_publicKey}:{_secretKey}"));
+            request.Headers.Authorization = credentials != null ? new AuthenticationHeaderValue("Basic", credentials) : null;
+            return await base.SendAsync(request, cancellationToken);
+
+            //request.Headers.Authorization = apiKey != null ? new AuthenticationHeaderValue(apiKey.AccessToken.Scheme, apiKey.AccessToken.Value) : null;
+            //return await base.SendAsync(request, cancellationToken).VhConfigureAwait();
         }
     }
 }
