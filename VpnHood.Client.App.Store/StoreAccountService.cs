@@ -63,7 +63,7 @@ public class StoreAccountService : IAppAccountService, IDisposable
             }
             catch (Exception ex)
             {
-                // We might encounter a ‘not exist’ exception. Therefore, we need to wait for Google to send the provider order to the Store.
+                // We might encounter a exist?exception. Therefore, we need to wait for Google to send the provider order to the Store.
                 VhLogger.Instance.LogWarning(ex, ex.Message);
                 if (counter == 5) throw;
                 await Task.Delay(TimeSpan.FromSeconds(5)).VhConfigureAwait();
