@@ -22,7 +22,7 @@ internal class AppSettings : Singleton<AppSettings>
     public string? FirebaseApiKey { get; init; } //YOUR_FIREBASE_API_KEY "xxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxxxxxxxx"
 
     // VpnHood Store server
-    public Uri StoreBaseUri { get; init; } = new ("http://192.168.0.108:5000");
+    public Uri StoreBaseUri { get; init; } = new ("http://192.168.2.73:5000");
     public Guid StoreAppId { get; init; } = Guid.Parse("00000000-0000-0000-0000-000000000000"); //YOUR_VPNHOOD_STORE_APP_ID
     public bool StoreIgnoreSslVerification { get; init; } = IsDebugMode;
 
