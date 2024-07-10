@@ -188,8 +188,8 @@ public class StoreAuthenticationService : IAppAuthenticationService
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var apiKey = await accountService.TryGetKey(VpnHoodApp.Instance.UiContext).VhConfigureAwait();
-            var _publicKey = apiKey.AccessToken;
-            var _secretKey = apiKey.RefreshToken;
+            var _publicKey = apiKey.AccessToken.Value;
+            var _secretKey = apiKey.RefreshToken.Value;
 
             var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_publicKey}:{_secretKey}"));
             request.Headers.Authorization = credentials != null ? new AuthenticationHeaderValue("Basic", credentials) : null;
