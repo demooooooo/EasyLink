@@ -20,6 +20,7 @@ public class StoreAuthenticationService : IAppAuthenticationService
     private ApiKey? _apiKey;
     private string ApiKeyFilePath => Path.Combine(_storageFolderPath, "account", "apiKey.json");
     public bool IsSignInWithGoogleSupported => _externalAuthenticationService != null;
+
     public string? UserId => ApiKey?.UserId;
 
     public HttpClient HttpClient { get; }
@@ -143,9 +144,6 @@ public class StoreAuthenticationService : IAppAuthenticationService
                     RefreshTokenType = RefreshTokenType.None
                 })
                 .VhConfigureAwait();
-
-
-            var tauthenticationClient = new AuthenticationClient(HttpClient);
         }
         // store must update its nuget package to support UnregisteredUserException
         catch (ApiException ex)
