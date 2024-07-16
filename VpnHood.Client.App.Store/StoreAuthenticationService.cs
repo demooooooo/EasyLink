@@ -177,7 +177,7 @@ public class StoreAuthenticationService : IAppAuthenticationService
         HttpClient.Dispose();
     }
 
-    private Task<ApiKey?> TryGetKey(IUiContext? uiContext)
+    private Task<ApiKey?> TryGetKey()
     {
         return Task.FromResult(ApiKey);
     }
@@ -185,7 +185,7 @@ public class StoreAuthenticationService : IAppAuthenticationService
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var apiKey = await accountService.TryGetKey(VpnHoodApp.Instance.UiContext).VhConfigureAwait();
+            var apiKey = await accountService.TryGetKey().VhConfigureAwait();
             var _publicKey = apiKey.AccessToken.Value;
             var _secretKey = apiKey.RefreshToken.Value;
 
