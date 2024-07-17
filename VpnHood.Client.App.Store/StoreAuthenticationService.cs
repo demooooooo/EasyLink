@@ -20,6 +20,7 @@ public class StoreAuthenticationService : IAppAuthenticationService
     private ApiKey? _apiKey;
     private string ApiKeyFilePath => Path.Combine(_storageFolderPath, "account", "apiKey.json");
     public bool IsSignInWithGoogleSupported => _externalAuthenticationService != null;
+
     public string? UserId => ApiKey?.UserId;
 
     public HttpClient HttpClient { get; }
@@ -143,9 +144,6 @@ public class StoreAuthenticationService : IAppAuthenticationService
                     RefreshTokenType = RefreshTokenType.None
                 })
                 .VhConfigureAwait();
-
-
-            var tauthenticationClient = new AuthenticationClient(HttpClient);
         }
         // store must update its nuget package to support UnregisteredUserException
         catch (ApiException ex)
@@ -179,7 +177,7 @@ public class StoreAuthenticationService : IAppAuthenticationService
         HttpClient.Dispose();
     }
 
-    private Task<ApiKey?> TryGetKey(IUiContext? uiContext)
+    private Task<ApiKey?> TryGetKey()
     {
         return Task.FromResult(ApiKey);
     }
@@ -187,7 +185,7 @@ public class StoreAuthenticationService : IAppAuthenticationService
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var apiKey = await accountService.TryGetKey(VpnHoodApp.Instance.UiContext).VhConfigureAwait();
+            var apiKey = await accountService.TryGetKey().VhConfigureAwait();
             var _publicKey = apiKey.AccessToken.Value;
             var _secretKey = apiKey.RefreshToken.Value;
 

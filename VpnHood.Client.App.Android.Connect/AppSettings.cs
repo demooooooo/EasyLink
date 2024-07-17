@@ -19,7 +19,7 @@ internal class AppSettings : Singleton<AppSettings>
     public string GoogleSignInClientId { get; init; } = "608246853989-unch2pvmf7urffb6ku8gac5pqofc9utf.apps.googleusercontent.com"; //YOUR_FIREBASE_CLIENT_ID
 
     // VpnHood Store server
-    public Uri StoreBaseUri { get; init; } = new ("http://192.168.2.73:5000");
+    public Uri StoreBaseUri { get; init; } = new ("http://192.168.2.27:5000");
     public Guid StoreAppId { get; init; } = Guid.Parse("00000000-0000-0000-0000-000000000000"); //YOUR_VPNHOOD_STORE_APP_ID
     public bool StoreIgnoreSslVerification { get; init; } = IsDebugMode;
 
