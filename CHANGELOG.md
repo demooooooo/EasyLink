@@ -1,3 +1,7 @@
+# v4.6.546
+### Server
+* Fix: AddressFamilyNotSupported error when server does not have IPv6
+
 # v4.6.544
 ### Client
 * Fix: App Filter does not work when no app is selected
@@ -12,7 +16,7 @@
 * Feature: Try to find a reachable server among endpoints
 * Feature: Implement ChartBoost ads
 * Update: Improve performance and memory usage
-* 
+ 
 ### Server
 * Feature: Support multiple redirect endpoints
 * Update: Use Cloudflare for detecting the server's public IP
